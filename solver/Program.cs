@@ -21,7 +21,7 @@ var line2 = Console.ReadLine();
 Console.WriteLine("Please enter line 3 of the board:");
 var line3 = Console.ReadLine();
 
-Console.WriteLine("Please enter the goal color:");
+Console.WriteLine("Please enter the goal color(s):");
 var goalColorInput = Console.ReadLine();
 
 if (line1 is null || line2 is null || line3 is null || goalColorInput is null)
@@ -34,14 +34,25 @@ var line1colors = line1.Split(' ');
 var line2colors = line2.Split(' ');
 var line3colors = line3.Split(' ');
 
-if(line1colors.Length != 3 || line2colors.Length != 3 || line3colors.Length != 3)
+if (line1colors.Length != 3 || line2colors.Length != 3 || line3colors.Length != 3)
 {
   Console.WriteLine("Each line must contain exactly 3 colors");
   return;
 }
 
+var goalColors = goalColorInput.Split(' ');
+if (goalColors.Length == 1)
+{
+  goalColors = new string[] { goalColors[0], goalColors[0], goalColors[0], goalColors[0] };
+}
+else if (goalColors.Length != 4)
+{
+  Console.WriteLine("Goal must contain exactly 1 or 4 colors");
+  return;
+}
+
 TileColor[,] board = new TileColor[3, 3];
-TileColor goalColor;
+TileColor[] goalColor = new TileColor[4]; 
 try
 {
   // parse colors from input
@@ -52,7 +63,10 @@ try
     board[2, i] = Enum.Parse<TileColor>(line3colors[i], true);
   }
 
-  goalColor = Enum.Parse<TileColor>(goalColorInput, true);
+  for (int i = 0; i < 4; i++)
+  {
+    goalColor[i] = Enum.Parse<TileColor>(goalColors[i], true);
+  }
 }
 catch (ArgumentException)
 {

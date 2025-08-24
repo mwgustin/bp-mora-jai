@@ -4,26 +4,36 @@ using System.Text;
 public record GameState : IEquatable<GameState>
 {
   public TileColor[,] Board;
-  public readonly TileColor Goal;
-
+  // public readonly TileColor Goal;
+  public readonly TileColor[] Goal;
   public GameState(TileColor[,] board, TileColor Goal)
+    : this(board, [ Goal, Goal, Goal, Goal ])
+  {
+  }
+  public GameState(TileColor[,] board, TileColor[] Goal)
   {
     if (board.GetLength(0) != 3 || board.GetLength(1) != 3)
     {
       throw new ArgumentException("Board must be 3x3");
     }
 
+    if (Goal.Length != 4)
+    {
+      throw new ArgumentException("Goal must have exactly 4 colors");
+    }
+
     Board = board;
     this.Goal = Goal;
   }
 
+
   // if corners are goal color then return true
   public bool IsSolved()
   {
-    return Board[0, 0] == Goal &&
-           Board[0, 2] == Goal &&
-           Board[2, 0] == Goal &&
-           Board[2, 2] == Goal;
+    return Board[0, 0] == Goal[0] &&
+           Board[0, 2] == Goal[1] &&
+           Board[2, 0] == Goal[2] &&
+           Board[2, 2] == Goal[3];
   }
   public bool Equals(GameState? x, GameState? y)
   {
@@ -46,7 +56,8 @@ public record GameState : IEquatable<GameState>
   public override int GetHashCode()
   {
     StringBuilder sb = new StringBuilder();
-    sb.Append((int)Goal);
+    // sb.Append((int)Goal);
+    sb.Append(string.Join(",", Goal));
     for (int r = 0; r < 3; r++)
     {
       for (int c = 0; c < 3; c++)

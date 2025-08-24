@@ -37,6 +37,14 @@ When a node state has a valid solution, that node is returned, and the relevant 
 
 TODO: potentially add a max depth. We register the depth of each node, but so far simply reviewing the previously seen board states has been more than enough to prevent issues.  Given the bounds of both the color limits and board size, and the fact that each one must be solvable, this may not be an issue in practice, but it would be a good potential safety mechanism.
 
+Update - Added support for multiple "goals". When prompted, can either enter a single goal (which will apply it to all corners), or can specify 4 goals which will go in order from TL > TR > BL > BR
+
+```
+|1  | x |  2| 
+| x | x | x |
+|3  | x |  4|
+```
+
 ## Tile Implementation Details
 Each tile implements an ITile interface which takes in the current gamestate and the row and column pressed, and returns the new gamestate given the rules of that particular color. For example, black shifts the passed in row right one tile.  This becomes particularly handy with Blue tiles as it can easily immitate the behavior it needs to based on its rules. 
 

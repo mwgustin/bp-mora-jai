@@ -15,9 +15,16 @@ public static class GameStateExtensions
       }
     }
 
-    if (actual.Goal != expected.Goal)
+    // if (actual.Goal != expected.Goal)
+    // {
+    //   Assert.Fail($"Goals are not equal. Expected: {expected.Goal}, Actual: {actual.Goal}");
+    // }
+    for (int i = 0; i < 4; i++)
     {
-      Assert.Fail($"Goals are not equal. Expected: {expected.Goal}, Actual: {actual.Goal}");
+      if (actual.Goal[i] != expected.Goal[i])
+      {
+        Assert.Fail($"Goals are not equal at position {i}. Expected: {expected.Goal[i]}, Actual: {actual.Goal[i]}");
+      }
     }
     return true;
   }
