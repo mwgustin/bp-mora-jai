@@ -42,3 +42,10 @@ Each tile implements an ITile interface which takes in the current gamestate and
 
 From there, each TileColor enum entry is mapped to an ITile behavior with the ToTile() extension so it can be translated appropriately in the solver algorithm. 
 
+
+
+## Tests
+Some tests have been written to validate the behavior of each tile type and for the main Solved checker in the GameState. 
+
+I have not yet written any tests for the main solver algorithm.
+
