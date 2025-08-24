@@ -3,8 +3,13 @@ using System.Text;
 
 public record GameState : IEquatable<GameState>
 {
+  // 3x3 board
+  private const int BOARD_SIZE = 3;
+
+  // goal size is 4 (corners)
+  private const int GOAL_SIZE = 4;
+
   public TileColor[,] Board;
-  // public readonly TileColor Goal;
   public readonly TileColor[] Goal;
   public GameState(TileColor[,] board, TileColor Goal)
     : this(board, [ Goal, Goal, Goal, Goal ])
@@ -12,12 +17,12 @@ public record GameState : IEquatable<GameState>
   }
   public GameState(TileColor[,] board, TileColor[] Goal)
   {
-    if (board.GetLength(0) != 3 || board.GetLength(1) != 3)
+    if (board.GetLength(0) != BOARD_SIZE || board.GetLength(1) != BOARD_SIZE)
     {
       throw new ArgumentException("Board must be 3x3");
     }
 
-    if (Goal.Length != 4)
+    if (Goal.Length != GOAL_SIZE)
     {
       throw new ArgumentException("Goal must have exactly 4 colors");
     }
@@ -35,32 +40,15 @@ public record GameState : IEquatable<GameState>
            Board[2, 0] == Goal[2] &&
            Board[2, 2] == Goal[3];
   }
-  public bool Equals(GameState? x, GameState? y)
-  {
-    if (x == null && y == null) return true;
-    if (x == null || y == null) return false;
-
-    if (x.Goal != y.Goal) return false;
-
-    for (int r = 0; r < 3; r++)
-    {
-      for (int c = 0; c < 3; c++)
-      {
-        if (x.Board[r, c] != y.Board[r, c]) return false;
-      }
-    }
-
-    return true;
-  }
-
+  
   public override int GetHashCode()
   {
     StringBuilder sb = new StringBuilder();
     // sb.Append((int)Goal);
     sb.Append(string.Join(",", Goal));
-    for (int r = 0; r < 3; r++)
+    for (int r = 0; r < BOARD_SIZE; r++)
     {
-      for (int c = 0; c < 3; c++)
+      for (int c = 0; c < BOARD_SIZE; c++)
       {
         sb.Append((int)Board[r, c]);
       }
@@ -72,9 +60,9 @@ public record GameState : IEquatable<GameState>
   public override string ToString()
   {
     StringBuilder sb = new StringBuilder();
-    for (int r = 0; r < 3; r++)
+    for (int r = 0; r < BOARD_SIZE; r++)
     {
-      for (int c = 0; c < 3; c++)
+      for (int c = 0; c < BOARD_SIZE; c++)
       {
         sb.Append(Board[r, c].ToString().PadRight(7));
         if (c < 2) sb.Append("| ");
