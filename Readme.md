@@ -5,6 +5,10 @@ Solver for Mora Jai puzzle boxes
 
 Written in C# / .Net10 (preview).
 
+Can run the web interface with
+
+`docker compose up -d` from the repo root then access it via http://localhost:5262/
+
 When run, the command line will prompt you for the 3 rows of colors and for the final goal (corner) colors. It will then solve the puzzle and print the moves needed to be made to solve it.
 
 Possible color values:
@@ -57,3 +61,6 @@ Some tests have been written to validate the behavior of each tile type and for 
 
 I have not yet written any tests for the main solver algorithm.
 
+
+## Web UI
+A web UI has been added. It behaves the same as the CLI, but provides a slightly nicer interface to work with, and makes the application a little easier to run (`docker compose up -d` > http://localhost:5262/)
